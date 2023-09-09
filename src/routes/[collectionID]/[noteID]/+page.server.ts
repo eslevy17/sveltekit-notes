@@ -39,5 +39,33 @@ export const actions = {
                     'notes+': note.id,
                 }
             )
+    },
+    "update-title": async ({ request, params}) => {
+        const pb = new PocketBase('http://127.0.0.1:8090');
+
+        const data = await request.formData();
+
+        await pb
+            .collection('note')
+            .update(
+                params.noteID,
+                {
+                    title: data.get('title')
+                }
+            )
+    },
+    "update-content": async ({ request, params }) => {
+        const pb = new PocketBase('http://127.0.0.1:8090');
+
+        const data = await request.formData();
+
+        await pb
+            .collection('note')
+            .update(
+                params.noteID,
+                {
+                    content: data.get('content'),
+                }
+            )
     }
 }

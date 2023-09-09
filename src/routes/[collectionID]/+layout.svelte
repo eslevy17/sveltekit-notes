@@ -1,6 +1,8 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
     export let data;
+
+    let noteIDToEdit;
 </script>
 
 <div class="collection-list">
@@ -11,9 +13,27 @@
             {#if data.collection.expand?.notes}
                 {#each data.collection.expand?.notes as note (note)}
                     <li>
-                        <a href="/{data.collection.id}/{note.id}">
-                            {note.title}
-                        </a>
+                        {#if note.id !== noteIDToEdit}
+                            <a href="/{data.collection.id}/{note.id}">
+                                {note.title}
+                            </a>
+                            <button on:click={() => {noteIDToEdit = note.id}}>Edit</button>
+                        {:else}
+                            <form
+                                method="POST"
+                                action="/{note.collection}/{note.id}?/update-title"
+                                use:enhance={() => {
+                                    return async ({ update }) => {
+                                        await update()
+                                        noteIDToEdit = undefined
+                                    }
+                                }}
+                            >
+                                <input type="text" name="title" value="{note.title}" />
+                                <input type="submit" value="Submit" />
+                                <button on:click={() => {noteIDToEdit = undefined}}>Cancel</button>
+                            </form>
+                        {/if}
                     </li>
                 {/each}
             {/if}
