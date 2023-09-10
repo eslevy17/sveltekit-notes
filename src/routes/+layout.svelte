@@ -16,6 +16,18 @@
                             {collection.title}
                         </a>
                         <button on:click={() => {collectionIDToEdit = collection.id}}>Edit</button>
+                        <form
+                            method="POST"
+                            action="/{collection.id}?/delete"
+                            use:enhance={({ cancel }) => {
+                                if (!confirm(
+                                    'Are you sure you wish to delete this collection?'
+                                    + `\n\n"${collection.title}"`
+                                )) cancel()
+                            }}
+                        >
+                            <input type="Submit" value="Delete" />
+                        </form>
                     {:else}
                         <form
                             method="POST"
@@ -29,7 +41,7 @@
                         >
                             <input type="text" name="title" value="{collection.title}" />
                             <input type="submit" value="Submit" />
-                            <button on:click={() => {collectionIDToEdit = undefined}}>Cancel</button>
+                            <button on:click={() => collectionIDToEdit = undefined}>Cancel</button>
                         </form>
                     {/if}
                 </li>
@@ -53,5 +65,10 @@
     .grid-layout {
         display: grid;
         grid-template-columns: 1fr 3fr;
+    }
+
+    li {
+        display: flex;
+        align-items: center;
     }
 </style>

@@ -18,6 +18,18 @@
                                 {note.title}
                             </a>
                             <button on:click={() => {noteIDToEdit = note.id}}>Edit</button>
+                            <form
+                                method="POST"
+                                action="/{data.collection.id}/{note.id}?/delete"
+                                use:enhance={({ cancel }) => {
+                                    if (!confirm(
+                                        'Are you sure you wish to delete this note?'
+                                        + `\n\n"${note.title}"`
+                                    )) cancel()
+                                }}
+                            >
+                                <input type="Submit" value="Delete" />
+                            </form>
                         {:else}
                             <form
                                 method="POST"
@@ -31,7 +43,7 @@
                             >
                                 <input type="text" name="title" value="{note.title}" />
                                 <input type="submit" value="Submit" />
-                                <button on:click={() => {noteIDToEdit = undefined}}>Cancel</button>
+                                <button on:click={() => noteIDToEdit = undefined}>Cancel</button>
                             </form>
                         {/if}
                     </li>
@@ -56,5 +68,10 @@
     .collection-list {
         display: grid;
         grid-template-columns: 1fr 1fr;
+    }
+
+    li {
+        display: flex;
+        align-items: center;
     }
 </style>

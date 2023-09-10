@@ -1,4 +1,5 @@
 import PocketBase from 'pocketbase';
+import { redirect } from "@sveltejs/kit";
 
 export async function load({ params }) {
     const pb = new PocketBase('http://127.0.0.1:8090');
@@ -67,5 +68,14 @@ export const actions = {
                     content: data.get('content'),
                 }
             )
+    },
+    delete: async ({ params }) => {
+        const pb = new PocketBase('http://127.0.0.1:8090');
+
+        await pb
+            .collection('note')
+            .delete(params.noteID);
+
+        throw redirect(303, `/${params.collectionID}`)
     }
 }
