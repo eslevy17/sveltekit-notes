@@ -1,5 +1,11 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
+    import add from '$lib/icons/add.svg';
+    import edit from '$lib/icons/edit.svg';
+    import revert from '$lib/icons/revert.svg';
+    import trash from '$lib/icons/trash.svg';
+    import save from '$lib/icons/save.svg';
+
     export let data;
 
     let collectionIDToEdit;
@@ -15,7 +21,10 @@
                         <a href="/{collection.id}">
                             {collection.title}
                         </a>
-                        <button on:click={() => {collectionIDToEdit = collection.id}}>Edit</button>
+                        <label>
+                            <img src="{edit}" alt="edit" />
+                            <button on:click={() => collectionIDToEdit = collection.id}>Edit</button>
+                        </label>
                         <form
                             method="POST"
                             action="/{collection.id}?/delete"
@@ -26,7 +35,10 @@
                                 )) cancel()
                             }}
                         >
-                            <input type="Submit" value="Delete" />
+                            <label>
+                                <img src="{trash}" alt="delete" />
+                                <input type="Submit" value="Delete" />
+                            </label>
                         </form>
                     {:else}
                         <form
@@ -40,8 +52,16 @@
                             }}
                         >
                             <input type="text" name="title" value="{collection.title}" />
-                            <input type="submit" value="Submit" />
-                            <button on:click={() => collectionIDToEdit = undefined}>Cancel</button>
+
+                            <label>
+                                <img src="{save}" alt="save" />
+                                <input type="submit" value="Submit" />
+                            </label>
+
+                            <label>
+                                <img src="{revert}" alt="revert" />
+                                <button on:click={() => collectionIDToEdit = undefined}>Revert</button>
+                            </label>
                         </form>
                     {/if}
                 </li>
@@ -50,7 +70,10 @@
             <li>
                 <form method="POST" action="/collectionID?/create" use:enhance>
                     <input type="text" name="title" />
-                    <input type="submit" value="Submit" />
+                    <label>
+                        <img src="{add}" alt="add" />
+                        <input type="submit" value="Submit" />
+                    </label>
                 </form>
             </li>
         </ul>
@@ -70,5 +93,15 @@
     li {
         display: flex;
         align-items: center;
+    }
+
+    label img {
+        cursor: pointer;
+        height: 1rem;
+    }
+
+    label button,
+    label input[type="submit"] {
+        display: none;
     }
 </style>
