@@ -5,14 +5,24 @@
     import revert from '$lib/icons/revert.svg';
     import trash from '$lib/icons/trash.svg';
     import save from '$lib/icons/save.svg';
+    import Toggle from "$lib/components/Toggle.svelte";
 
     export let data;
+
+    function handleDarkThemeToggle() {
+        document.querySelector('body').classList.toggle('dark')
+    }
+
+    function checkIsDark() {
+        document.querySelector('body').classList.contains('dark')
+    }
 
     let collectionIDToEdit;
 </script>
 
 <div class="grid-layout">
     <div>
+        <Toggle {handleDarkThemeToggle} isDark="{checkIsDark}"/>
         <h1>Notes</h1>
         <ul>
             {#each data.collections as collection (collection)}
@@ -86,6 +96,7 @@
 
 <style>
     .grid-layout {
+        background-color: var(--bg-color);
         display: grid;
         grid-template-columns: 1fr 3fr;
     }

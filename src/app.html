@@ -10,3 +10,67 @@
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
+
+<script>
+	if (window?.matchMedia('prefers-color-scheme: dark')) {
+		document.body.classList.add('dark');
+	}
+</script>
+
+<style>
+	body {
+		--bg-color: white;
+		--font-color: black;
+		--border-color: black;
+
+		--link: dodgerblue;
+		--link-hover: deepskyblue;
+		--link-active: royalblue;
+
+		background-color: var(--bg-color);
+	}
+
+	p, h1, h2, h3, h4, h5, h6, textarea {
+		color: var(--font-color);
+	}
+
+	input, textarea {
+		color: var(--font-color);
+		background-color: var(--bg-color);
+	}
+
+	a {
+		color: var(--link);
+		filter: brightness(.8)
+	}
+
+	a:hover {
+		color: var(--link-hover);
+	}
+
+	a:active {
+		color: var(--link-active);
+	}
+
+	svg path{
+		color: var(--font-color)
+	}
+
+	/* BEGIN DARK MODE */
+
+	.dark {
+		--bg-color: #2e2e2e;
+		--font-color: #e6e6e6;
+		--border-color: #595959;
+	}
+
+	.dark a {
+		filter: brightness(1);
+	}
+
+	.dark img {
+		filter: invert(1);
+	}
+
+	/* END DARK MODE */
+</style>
