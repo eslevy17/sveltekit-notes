@@ -21,37 +21,24 @@
 </script>
 
 <div class="grid-layout">
-    <div>
-        <Toggle {handleDarkThemeToggle} isDark="{checkIsDark}"/>
-        <h1>Notes</h1>
+    <div class="all-collections-list">
+        <h3>Notes</h3>
         <ul>
             {#each data.collections as collection (collection)}
-                <li>
+                <li class="collection-details">
                     {#if collection.id !== collectionIDToEdit}
-                        <a href="/{collection.id}">
-                            {collection.title}
-                        </a>
-                        <label>
-                            <img src="{edit}" alt="edit" />
-                            <button on:click={() => collectionIDToEdit = collection.id}>Edit</button>
-                        </label>
-                        <form
-                            method="POST"
-                            action="/{collection.id}?/delete"
-                            use:enhance={({ cancel }) => {
-                                if (!confirm(
-                                    'Are you sure you wish to delete this collection?'
-                                    + `\n\n"${collection.title}"`
-                                )) cancel()
-                            }}
-                        >
+                        <div class="note-interior">
+                            <a href="/{collection.id}">
+                                {collection.title}
+                            </a>
                             <label>
-                                <img src="{trash}" alt="delete" />
-                                <input type="Submit" value="Delete" />
+                                <img src="{edit}" alt="edit" />
+                                <button on:click={() => collectionIDToEdit = collection.id}>Edit</button>
                             </label>
-                        </form>
+                        </div>
                     {:else}
                         <form
+                            class="collection-edit-form"
                             method="POST"
                             action="/{collection.id}?/update"
                             use:enhance={() => {
@@ -73,16 +60,43 @@
                                 <button on:click={() => collectionIDToEdit = undefined}>Revert</button>
                             </label>
                         </form>
+                        <form
+                            method="POST"
+                            action="/{collection.id}?/delete"
+                            use:enhance={({ cancel }) => {
+                                if (!confirm(
+                                    'Are you sure you wish to delete this collection?'
+                                    + `\n\n"${collection.title}"`
+                                )) cancel()
+                            }}
+                        >
+                            <label>
+                                <img src="{trash}" alt="delete" />
+                                <input type="Submit" value="Delete" />
+                            </label>
+                        </form>
                     {/if}
                 </li>
             {/each}
 
             <li>
-                <form method="POST" action="/collectionID?/create" use:enhance>
+                <p class="add-new"><i>Add new:</i></p>
+                <form
+                    class="add-new-form"
+                    method="POST"
+                    action="/collectionID?/create"
+                    use:enhance
+                >
                     <input type="text" name="title" />
+
                     <label>
                         <img src="{add}" alt="add" />
                         <input type="submit" value="Submit" />
+                    </label>
+
+                    <label>
+                        <img src="{revert}" alt="revert" />
+                        <input type="reset" name="reset" />
                     </label>
                 </form>
             </li>
@@ -99,20 +113,54 @@
         background-color: var(--bg-color);
         display: grid;
         grid-template-columns: 1fr 3fr;
+        grid-template-rows: 100vh;
     }
 
-    li {
-        display: flex;
+    .all-collections-list {
+        padding: 0 1.25rem;
+        border-right: 1px solid var(--border-color);
+    }
+
+    .collection-details {
+        display: grid;
+        grid-template-columns: auto 1rem;
         align-items: center;
+    }
+
+    .note-interior {
+        width: 100%;
+        display: grid;
+        grid-template-columns: auto 1rem 1rem;
+    }
+
+    .collection-edit-form {
+        display: grid;
+        grid-template-columns: auto 2rem 1rem 1rem;
+    }
+
+    .add-new-form {
+        display: grid;
+        grid-template-columns: auto 2rem 1rem 2rem;
+    }
+
+    .add-new {
+        font-size: .75rem;
+        opacity: .75;
+        margin-top: .5rem;
     }
 
     label img {
         cursor: pointer;
         height: 1rem;
+        opacity: .7;
+    }
+
+    label img:hover {
+        opacity: 1;
     }
 
     label button,
-    label input[type="submit"] {
+    label input {
         display: none;
     }
 </style>

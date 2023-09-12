@@ -12,38 +12,26 @@
 </script>
 
 <div class="collection-list">
-    <div>
-        <h2>{data.collection.title}</h2>
+    <div class="notes-list">
+        <h3>{data.collection.title}</h3>
 
         <ul>
             {#if data.collection.expand?.notes}
                 {#each data.collection.expand?.notes as note (note)}
-                    <li>
+                    <li class="note-details">
                         {#if note.id !== noteIDToEdit}
-                            <a href="/{data.collection.id}/{note.id}">
-                                {note.title}
-                            </a>
-                            <label>
-                                <img src="{edit}" alt="edit" />
-                                <button on:click={() => noteIDToEdit = note.id}>Edit</button>
-                            </label>
-                            <form
-                                method="POST"
-                                action="/{data.collection.id}/{note.id}?/delete"
-                                use:enhance={({ cancel }) => {
-                                    if (!confirm(
-                                        'Are you sure you wish to delete this note?'
-                                        + `\n\n"${note.title}"`
-                                    )) cancel()
-                                }}
-                            >
+                            <div class="note-interior">
+                                <a href="/{data.collection.id}/{note.id}">
+                                    {note.title}
+                                </a>
                                 <label>
-                                    <img src="{trash}" alt="delete" />
-                                    <input type="Submit" value="Delete" />
+                                    <img src="{edit}" alt="edit" />
+                                    <button on:click={() => noteIDToEdit = note.id}>Edit</button>
                                 </label>
-                            </form>
+                            </div>
                         {:else}
                             <form
+                                class="note-edit-form"
                                 method="POST"
                                 action="/{note.collection}/{note.id}?/update-title"
                                 use:enhance={() => {
@@ -65,17 +53,45 @@
                                     <button on:click={() => noteIDToEdit = undefined}>Cancel</button>
                                 </label>
                             </form>
+                            <form
+                                class="note-edit-form"
+                                method="POST"
+                                action="/{data.collection.id}/{note.id}?/delete"
+                                use:enhance={({ cancel }) => {
+                                    if (!confirm(
+                                        'Are you sure you wish to delete this note?'
+                                        + `\n\n"${note.title}"`
+                                    )) cancel()
+                                }}
+                            >
+                                <label>
+                                    <img src="{trash}" alt="delete" />
+                                    <input type="Submit" value="Delete" />
+                                </label>
+                            </form>
                         {/if}
                     </li>
                 {/each}
             {/if}
 
             <li>
-                <form method="POST" action="/{data.collection.id}/noteID?/create" use:enhance>
+                <p class="add-new"><i>Add new:</i></p>
+                <form
+                    class="add-new-form"
+                    method="POST"
+                    action="/{data.collection.id}/noteID?/create"
+                    use:enhance
+                >
                     <input type="text" name="title" />
+
                     <label>
                         <img src="{add}" alt="add" />
                         <input type="submit" value="Submit" />
+                    </label>
+
+                    <label>
+                        <img src="{revert}" alt="revert" />
+                        <input type="reset" name="reset" />
                     </label>
                 </form>
             </li>
@@ -90,21 +106,55 @@
 <style>
     .collection-list {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: 100vh;
     }
 
-    li {
-        display: flex;
+    .notes-list {
+        padding: 0 1.25rem;
+        border-right: 1px solid var(--border-color);
+    }
+
+    .note-details {
+        display: grid;
+        grid-template-columns: auto 1rem;
         align-items: center;
+    }
+
+    .note-interior {
+        width: 100%;
+        display: grid;
+        grid-template-columns: auto 1rem 1rem;
+    }
+
+    .note-edit-form {
+        display: grid;
+        grid-template-columns: auto 2rem 1rem 1rem;
+    }
+
+    .add-new-form {
+        display: grid;
+        grid-template-columns: auto 2rem 1rem 2rem;
+    }
+
+    .add-new {
+        font-size: .75rem;
+        opacity: .75;
+        margin-top: .5rem;
     }
 
     label img {
         cursor: pointer;
         height: 1rem;
+        opacity: .7;
+    }
+
+    label img:hover {
+        opacity: 1;
     }
 
     label button,
-    label input[type="submit"] {
+    label input {
         display: none;
     }
 </style>

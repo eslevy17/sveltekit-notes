@@ -7,28 +7,49 @@
     export let data;
 </script>
 
-<h4>{data.note.title}</h4>
-<form method="POST" action="?/update-content" use:enhance>
-    <textarea name="content" bind:value={data.note.content}></textarea>
-    <label>
-        <img src="{save}" alt="save" />
-        <input type="submit" value="Submit" />
-    </label>
+<div class="note-details">
+    <h3>{data.note.title}</h3>
+    <form method="POST" action="?/update-content" use:enhance>
+        <textarea name="content" bind:value={data.note.content}></textarea>
+        <label>
+            <img src="{save}" alt="save" />
+            <input type="submit" value="Submit" />
+        </label>
 
-    <label>
-        <img src="{revert}" alt="revert" />
-        <button on:click|preventDefault={() => invalidateAll()}>Revert</button>
-    </label>
-</form>
+        <label>
+            <img src="{revert}" alt="revert" />
+            <button on:click|preventDefault={() => invalidateAll()}>Revert</button>
+        </label>
+    </form>
+</div>
 
 <style>
+    .note-details {
+        padding: 0 1.25rem;
+    }
+
     label img {
         cursor: pointer;
         height: 1rem;
+        opacity: .7;
+    }
+
+    label img:hover {
+        opacity: 1;
     }
 
     label button,
-    label input[type="submit"] {
+    label input {
         display: none;
+    }
+
+    form {
+        display: grid;
+        grid-template-columns: auto 1.75rem 1.75rem;
+        align-items: end;
+    }
+
+    textarea {
+        resize: vertical;
     }
 </style>
