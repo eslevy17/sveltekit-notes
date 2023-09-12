@@ -21,6 +21,10 @@
 </script>
 
 <div class="grid-layout">
+    <nav>
+        <h3>SvelteKit Notes!</h3>
+        <Toggle {handleDarkThemeToggle} isDark="{checkIsDark}"/>
+    </nav>
     <div class="all-collections-list">
         <h3>Notes</h3>
         <ul>
@@ -103,22 +107,41 @@
         </ul>
     </div>
 
-    <div>
+    <div class="note-details-slot">
         <slot />
     </div>
 </div>
 
 <style>
     .grid-layout {
+        height: 100vh;
         background-color: var(--bg-color);
         display: grid;
+        grid-template-rows: auto 1fr;
         grid-template-columns: 1fr 3fr;
-        grid-template-rows: 100vh;
+        grid-template-areas:
+            "header header"
+            "note-collection note-details";
+    }
+
+    nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 1.25rem;
+        border-bottom: 1px solid var(--border-color);
+        grid-area: header;
     }
 
     .all-collections-list {
+        grid-area: note-collection;
         padding: 0 1.25rem;
         border-right: 1px solid var(--border-color);
+        height: 100%;
+    }
+
+    .note-details-slot {
+        grid-area: note-details;
     }
 
     .collection-details {

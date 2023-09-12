@@ -107,7 +107,7 @@
     .collection-list {
         display: grid;
         grid-template-columns: 1fr 2fr;
-        grid-template-rows: 100vh;
+        height: 100%;
     }
 
     .notes-list {
