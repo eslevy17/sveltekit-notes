@@ -198,8 +198,10 @@
 
     .note-edit-form {
         display: grid;
-        grid-template-columns: auto 2rem 1rem 1rem;
+        grid-template-columns: auto 1rem 1rem;
+        grid-gap: 1rem;
         align-items: center;
+        margin-right: 1rem;
     }
 
     .add-new-form {
