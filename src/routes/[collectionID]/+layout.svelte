@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
     import { enhance } from '$app/forms';
     import add from '$lib/icons/add.svg';
     import edit from '$lib/icons/edit.svg';

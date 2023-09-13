@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
     import { enhance } from '$app/forms';
     import revert from '$lib/icons/revert.svg';
     import save from '$lib/icons/save.svg';
