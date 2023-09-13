@@ -33,6 +33,10 @@
     <div class="notes-list">
         <h3>{data.collection.title}</h3>
 
+        {#if !data.collection.expand?.notes.length}
+            <p class="helper-text">No notes yet</p>
+        {/if}
+
         <ul>
             {#if data.collection.expand?.notes}
                 {#each data.collection.expand?.notes as note (note)}
@@ -113,7 +117,7 @@
             {/if}
 
             <li style="padding-left: .5rem">
-                <p class="add-new"><i>Add new:</i></p>
+                <p class="helper-text">Add new:</p>
                 <form
                     class="add-new-form"
                     method="POST"
@@ -203,8 +207,9 @@
         grid-template-columns: auto 2rem 1rem 2rem;
     }
 
-    .add-new {
+    .helper-text {
         font-size: .75rem;
+        font-style: italic;
         opacity: .75;
         margin-top: .5rem;
     }

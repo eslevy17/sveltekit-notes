@@ -45,6 +45,11 @@
     </nav>
     <div class="all-collections-list">
         <h3>Notes</h3>
+
+        {#if !data.collections.length}
+            <p class="helper-text">No collections yet</p>
+        {/if}
+
         <ul>
             {#each data.collections as collection (collection)}
                 <li class="collection-details" class:isSelected={collection.id === urlParams.collectionID}>
@@ -122,7 +127,7 @@
             {/each}
 
             <li style="padding-left: .5rem">
-                <p class="add-new"><i>Add new:</i></p>
+                <p class="helper-text">Add new:</p>
                 <form
                     class="add-new-form"
                     method="POST"
@@ -232,8 +237,9 @@
         grid-template-columns: auto 2rem 1rem 2rem;
     }
 
-    .add-new {
+    .helper-text {
         font-size: .75rem;
+        font-style: italic;
         opacity: .75;
         margin-top: .5rem;
     }
