@@ -16,6 +16,7 @@
     })
 
     let noteIDToEdit;
+    let isAdding = false;
 </script>
 
 <div class="collection-list">
@@ -33,7 +34,12 @@
                                 </a>
                                 <label>
                                     <img src="{edit}" alt="edit" />
-                                    <button on:click={() => noteIDToEdit = note.id}>Edit</button>
+                                    <button
+                                        on:click={() => {
+                                            noteIDToEdit = note.id
+                                            isAdding = false
+                                        }}
+                                    >Edit</button>
                                 </label>
                             </div>
                         {:else}
@@ -103,6 +109,8 @@
                     method="POST"
                     action="/{data.collection.id}/noteID?/create"
                     use:enhance
+                    on:submit={() => isAdding = false}
+                    on:reset={() => isAdding = false}
                 >
                     <input
                         type="text"
@@ -111,20 +119,26 @@
                             if (e.key === 'Escape') {
                                 e.target.value = ''
                                 e.target.blur()
+                                isAdding = false
                             }
                         }}
-                        on:focus={() => noteIDToEdit = undefined}
+                        on:focus={() => {
+                            noteIDToEdit = undefined
+                            isAdding = true
+                        }}
                     />
 
-                    <label>
-                        <img src="{add}" alt="add" />
-                        <input type="submit" value="Submit" />
-                    </label>
+                    {#if isAdding}
+                        <label>
+                            <img src="{add}" alt="add" />
+                            <input type="submit" value="Submit" />
+                        </label>
 
-                    <label>
-                        <img src="{revert}" alt="revert" />
-                        <input type="reset" name="reset" />
-                    </label>
+                        <label>
+                            <img src="{revert}" alt="revert" />
+                            <input type="reset" name="reset" />
+                        </label>
+                    {/if}
                 </form>
             </li>
         </ul>
