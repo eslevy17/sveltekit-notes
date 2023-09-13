@@ -5,8 +5,15 @@
     import revert from '$lib/icons/revert.svg';
     import trash from '$lib/icons/trash.svg';
     import save from '$lib/icons/save.svg';
+    import {afterUpdate} from "svelte";
 
     export let data;
+
+    afterUpdate(() => {
+        if (noteIDToEdit) {
+            document.querySelector('form[name="note-edit-form"] input[type="text"]').focus()
+        }
+    })
 
     let noteIDToEdit;
 </script>
@@ -31,6 +38,7 @@
                             </div>
                         {:else}
                             <form
+                                name="note-edit-form"
                                 class="note-edit-form"
                                 method="POST"
                                 action="/{note.collection}/{note.id}?/update-title"
@@ -41,7 +49,16 @@
                                     }
                                 }}
                             >
-                                <input type="text" name="title" value="{note.title}" />
+                                <input
+                                    type="text"
+                                    name="title"
+                                    value="{note.title}"
+                                    on:keydown={e => {
+                                        if (e.key === 'Escape') {
+                                            noteIDToEdit = undefined
+                                        }
+                                    }}
+                                />
 
                                 <label>
                                     <img src="{save}" alt="save" />
@@ -62,6 +79,11 @@
                                         'Are you sure you wish to delete this note?'
                                         + `\n\n"${note.title}"`
                                     )) cancel()
+
+                                    return async ({ update }) => {
+                                        await update()
+                                        noteIDToEdit = undefined
+                                    }
                                 }}
                             >
                                 <label>
@@ -82,7 +104,17 @@
                     action="/{data.collection.id}/noteID?/create"
                     use:enhance
                 >
-                    <input type="text" name="title" />
+                    <input
+                        type="text"
+                        name="title"
+                        on:keydown={e => {
+                            if (e.key === 'Escape') {
+                                e.target.value = ''
+                                e.target.blur()
+                            }
+                        }}
+                        on:focus={() => noteIDToEdit = undefined}
+                    />
 
                     <label>
                         <img src="{add}" alt="add" />

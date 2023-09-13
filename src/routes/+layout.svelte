@@ -6,6 +6,7 @@
     import trash from '$lib/icons/trash.svg';
     import save from '$lib/icons/save.svg';
     import Toggle from "$lib/components/Toggle.svelte";
+    import {afterUpdate} from "svelte";
 
     export let data;
 
@@ -16,6 +17,12 @@
     function checkIsDark() {
         document.querySelector('body').classList.contains('dark')
     }
+
+    afterUpdate(() => {
+        if (collectionIDToEdit) {
+            document.querySelector('form[name="collection-edit-form"] input[type="text"]').focus()
+        }
+    })
 
     let collectionIDToEdit;
 </script>
@@ -42,6 +49,7 @@
                         </div>
                     {:else}
                         <form
+                            name="collection-edit-form"
                             class="collection-edit-form"
                             method="POST"
                             action="/{collection.id}?/update"
@@ -52,7 +60,16 @@
                                 }
                             }}
                         >
-                            <input type="text" name="title" value="{collection.title}" />
+                            <input
+                                type="text"
+                                name="title"
+                                value="{collection.title}"
+                                on:keydown={e => {
+                                    if (e.key === 'Escape') {
+                                        collectionIDToEdit = undefined
+                                    }
+                                }}
+                            />
 
                             <label>
                                 <img src="{save}" alt="save" />
@@ -72,6 +89,11 @@
                                     'Are you sure you wish to delete this collection?'
                                     + `\n\n"${collection.title}"`
                                 )) cancel()
+
+                                return async ({ update }) => {
+                                    await update()
+                                    collectionIDToEdit = undefined
+                                }
                             }}
                         >
                             <label>
@@ -91,7 +113,17 @@
                     action="/collectionID?/create"
                     use:enhance
                 >
-                    <input type="text" name="title" />
+                    <input
+                        type="text"
+                        name="title"
+                        on:keydown={e => {
+                            if (e.key === 'Escape') {
+                                e.target.value = ''
+                                e.target.blur()
+                            }
+                        }}
+                        on:focus={() => collectionIDToEdit = undefined}
+                    />
 
                     <label>
                         <img src="{add}" alt="add" />
