@@ -6,6 +6,7 @@
     import trash from '$lib/icons/trash.svg';
     import save from '$lib/icons/save.svg';
     import {afterUpdate} from "svelte";
+    import { page } from "$app/stores";
 
     export let data;
 
@@ -17,6 +18,15 @@
 
     let noteIDToEdit;
     let isAdding = false;
+
+    let urlParams;
+
+    $: {
+        urlParams = {
+            collectionID: $page.url.pathname.split('/')[1],
+            noteID: $page.url.pathname.split('/')[2]
+        }
+    }
 </script>
 
 <div class="collection-list">
@@ -26,7 +36,7 @@
         <ul>
             {#if data.collection.expand?.notes}
                 {#each data.collection.expand?.notes as note (note)}
-                    <li class="note-details">
+                    <li class="note-details" class:isSelected={note.id === urlParams.noteID}>
                         {#if note.id !== noteIDToEdit}
                             <div class="note-interior">
                                 <a href="/{data.collection.id}/{note.id}">
@@ -102,7 +112,7 @@
                 {/each}
             {/if}
 
-            <li>
+            <li style="padding-left: .5rem">
                 <p class="add-new"><i>Add new:</i></p>
                 <form
                     class="add-new-form"
@@ -167,15 +177,25 @@
         align-items: center;
     }
 
+    .note-details:hover {
+        background-color: var(--bg-hover-color);
+    }
+
+    .note-details.isSelected {
+        background-color: var(--bg-hover-color);
+    }
+
     .note-interior {
         width: 100%;
         display: grid;
         grid-template-columns: auto 1rem 1rem;
+        align-items: center;
     }
 
     .note-edit-form {
         display: grid;
         grid-template-columns: auto 2rem 1rem 1rem;
+        align-items: center;
     }
 
     .add-new-form {

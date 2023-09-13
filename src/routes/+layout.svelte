@@ -7,6 +7,7 @@
     import save from '$lib/icons/save.svg';
     import Toggle from "$lib/components/Toggle.svelte";
     import {afterUpdate} from "svelte";
+    import { page } from '$app/stores';
 
     export let data;
 
@@ -26,6 +27,15 @@
 
     let collectionIDToEdit;
     let isAdding = false;
+
+    let urlParams;
+
+    $: {
+        urlParams = {
+            collectionID: $page.url.pathname.split('/')[1],
+            noteID: $page.url.pathname.split('/')[2]
+        }
+    }
 </script>
 
 <div class="grid-layout">
@@ -37,7 +47,7 @@
         <h3>Notes</h3>
         <ul>
             {#each data.collections as collection (collection)}
-                <li class="collection-details">
+                <li class="collection-details" class:isSelected={collection.id === urlParams.collectionID}>
                     {#if collection.id !== collectionIDToEdit}
                         <div class="note-interior">
                             <a href="/{collection.id}">
@@ -111,7 +121,7 @@
                 </li>
             {/each}
 
-            <li>
+            <li style="padding-left: .5rem">
                 <p class="add-new"><i>Add new:</i></p>
                 <form
                     class="add-new-form"
@@ -196,15 +206,25 @@
         align-items: center;
     }
 
+    .collection-details:hover {
+        background-color: var(--bg-hover-color);
+    }
+
+    .collection-details.isSelected {
+        background-color: var(--bg-hover-color);
+    }
+
     .note-interior {
         width: 100%;
         display: grid;
         grid-template-columns: auto 1rem 1rem;
+        align-items: center;
     }
 
     .collection-edit-form {
         display: grid;
         grid-template-columns: auto 2rem 1rem 1rem;
+        align-items: center;
     }
 
     .add-new-form {
