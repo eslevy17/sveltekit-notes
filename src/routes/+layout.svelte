@@ -1,15 +1,10 @@
 <script>
-    import { enhance } from '$app/forms';
-    import edit from '$lib/icons/edit.svg';
-    import folder from '$lib/icons/folder.svg';
     import house from '$lib/icons/house.svg';
-    import revert from '$lib/icons/revert.svg';
-    import trash from '$lib/icons/trash.svg';
-    import save from '$lib/icons/save.svg';
     import Toggle from "$lib/components/Toggle.svelte";
     import {afterUpdate} from "svelte";
     import { page } from '$app/stores';
     import AddNewItemForm from "$lib/components/AddNewItemForm.svelte";
+    import ItemLine from "$lib/components/ItemLine.svelte";
 
     export let data;
 
@@ -55,79 +50,19 @@
 
         <ul>
             {#each data.collections as collection (collection)}
-                <li class="collection-details" class:isSelected={collection.id === urlParams.collectionID}>
-                    <img src="{folder}" alt="folder" />
-                    {#if collection.id !== collectionIDToEdit}
-                        <div class="note-interior">
-                            <a href="/{collection.id}">
-                                {collection.title}
-                            </a>
-                            <label>
-                                <img src="{edit}" alt="edit" />
-                                <button
-                                    on:click={() => {
-                                        collectionIDToEdit = collection.id
-                                        isAdding = false
-                                    }}
-                                >Edit</button>
-                            </label>
-                        </div>
-                    {:else}
-                        <form
-                            name="collection-edit-form"
-                            class="collection-edit-form"
-                            method="POST"
-                            action="/{collection.id}?/update"
-                            use:enhance={() => {
-                                return async ({ update }) => {
-                                    await update()
-                                    collectionIDToEdit = undefined
-                                }
-                            }}
-                        >
-                            <input
-                                type="text"
-                                name="title"
-                                value="{collection.title}"
-                                on:keydown={e => {
-                                    if (e.key === 'Escape') {
-                                        collectionIDToEdit = undefined
-                                    }
-                                }}
-                            />
+                <ItemLine
+                    itemType="collection"
+                    itemID={collection.id}
+                    itemTitle={collection.title}
 
-                            <label>
-                                <img src="{save}" alt="save" />
-                                <input type="submit" value="Submit" />
-                            </label>
+                    parentCollectionID={null}
 
-                            <label>
-                                <img src="{revert}" alt="revert" />
-                                <button on:click={() => collectionIDToEdit = undefined}>Revert</button>
-                            </label>
-                        </form>
-                        <form
-                            method="POST"
-                            action="/{collection.id}?/delete"
-                            use:enhance={({ cancel }) => {
-                                if (!confirm(
-                                    'Are you sure you wish to delete this collection?'
-                                    + `\n\n"${collection.title}"`
-                                )) cancel()
+                    isSelected={collection.id === urlParams.collectionID}
+                    isEditing={collectionIDToEdit === collection.id}
 
-                                return async ({ update }) => {
-                                    await update()
-                                    collectionIDToEdit = undefined
-                                }
-                            }}
-                        >
-                            <label>
-                                <img src="{trash}" alt="delete" />
-                                <input type="Submit" value="Delete" />
-                            </label>
-                        </form>
-                    {/if}
-                </li>
+                    setItemIDToEdit={newVal => collectionIDToEdit = newVal}
+                    setIsAdding={newVal => isAdding = newVal}
+                />
             {/each}
 
             <AddNewItemForm
@@ -197,55 +132,10 @@
         grid-area: note-details;
     }
 
-    .collection-details {
-        display: grid;
-        grid-template-columns: 1rem auto 1rem;
-        align-items: center;
-        padding-left: .5rem;
-    }
-
-    .collection-details:hover {
-        background-color: var(--bg-hover-color);
-    }
-
-    .collection-details.isSelected {
-        background-color: var(--bg-hover-color);
-    }
-
-    .note-interior {
-        width: 100%;
-        display: grid;
-        grid-template-columns: auto 1rem 1rem;
-        align-items: center;
-    }
-
-    .collection-edit-form {
-        display: grid;
-        grid-template-columns: auto 1rem 1rem;
-        grid-gap: 1rem;
-        align-items: center;
-        margin-right: 1rem;
-    }
-
     .helper-text {
         font-size: .75rem;
         font-style: italic;
         opacity: .75;
         margin-top: 1rem;
-    }
-
-    img {
-        cursor: pointer;
-        height: 1rem;
-        opacity: .7;
-    }
-
-    img:hover {
-        opacity: 1;
-    }
-
-    label button,
-    label input {
-        display: none;
     }
 </style>
