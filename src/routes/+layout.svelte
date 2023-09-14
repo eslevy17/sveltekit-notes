@@ -3,6 +3,7 @@
     import add from '$lib/icons/add.svg';
     import edit from '$lib/icons/edit.svg';
     import folder from '$lib/icons/folder.svg';
+    import house from '$lib/icons/house.svg';
     import revert from '$lib/icons/revert.svg';
     import trash from '$lib/icons/trash.svg';
     import save from '$lib/icons/save.svg';
@@ -41,7 +42,10 @@
 
 <div class="grid-layout">
     <nav>
-        <h3>SvelteKit Notes!</h3>
+        <a href="/" class="site-title">
+            <img src="{house}" alt="house" />
+            <h3>SvelteKit Notes!</h3>
+        </a>
         <Toggle {handleDarkThemeToggle} isDark="{checkIsDark}"/>
     </nav>
     <div class="all-collections-list">
@@ -185,11 +189,32 @@
             "note-collection note-details";
     }
 
+    .site-title {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        opacity: .7;
+        padding: 0;
+    }
+
+    .site-title:hover {
+        opacity: 1;
+    }
+
+    .site-title img {
+        opacity: 1; /* to override the regular img {} selector */
+        height: 1.5rem;
+    }
+
+    .site-title h3 {
+        margin: 0;
+    }
+
     nav {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 1.25rem;
+        padding: .5rem 1rem;
         border-bottom: 1px solid var(--border-color);
         grid-area: header;
     }
