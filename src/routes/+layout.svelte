@@ -126,7 +126,7 @@
                 </li>
             {/each}
 
-            <li style="padding-left: .5rem">
+            <li class="helper-text-li">
                 <p class="helper-text">Add new:</p>
                 <form
                     class="add-new-form"
@@ -237,14 +237,20 @@
 
     .add-new-form {
         display: grid;
-        grid-template-columns: auto 2rem 1rem 2rem;
+        grid-template-columns: auto 1rem 1rem 1rem;
+        align-items: center;
+        grid-gap: 1rem;
+    }
+
+    .helper-text-li {
+        padding-left: .5rem;
     }
 
     .helper-text {
         font-size: .75rem;
         font-style: italic;
         opacity: .75;
-        margin-top: .5rem;
+        margin-top: 1rem;
     }
 
     img {
