@@ -2,6 +2,7 @@
     import { enhance } from '$app/forms';
     import add from '$lib/icons/add.svg';
     import edit from '$lib/icons/edit.svg';
+    import folder from '$lib/icons/folder.svg';
     import revert from '$lib/icons/revert.svg';
     import trash from '$lib/icons/trash.svg';
     import save from '$lib/icons/save.svg';
@@ -44,8 +45,6 @@
         <Toggle {handleDarkThemeToggle} isDark="{checkIsDark}"/>
     </nav>
     <div class="all-collections-list">
-        <h3>Notes</h3>
-
         {#if !data.collections.length}
             <p class="helper-text">No collections yet</p>
         {/if}
@@ -53,6 +52,7 @@
         <ul>
             {#each data.collections as collection (collection)}
                 <li class="collection-details" class:isSelected={collection.id === urlParams.collectionID}>
+                    <img src="{folder}" alt="folder" />
                     {#if collection.id !== collectionIDToEdit}
                         <div class="note-interior">
                             <a href="/{collection.id}">
@@ -207,8 +207,9 @@
 
     .collection-details {
         display: grid;
-        grid-template-columns: auto 1rem;
+        grid-template-columns: 1rem auto 1rem;
         align-items: center;
+        padding-left: .5rem;
     }
 
     .collection-details:hover {
@@ -246,13 +247,13 @@
         margin-top: .5rem;
     }
 
-    label img {
+    img {
         cursor: pointer;
         height: 1rem;
         opacity: .7;
     }
 
-    label img:hover {
+    img:hover {
         opacity: 1;
     }
 

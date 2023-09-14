@@ -2,6 +2,7 @@
     import { enhance } from '$app/forms';
     import add from '$lib/icons/add.svg';
     import edit from '$lib/icons/edit.svg';
+    import file from '$lib/icons/file.svg';
     import revert from '$lib/icons/revert.svg';
     import trash from '$lib/icons/trash.svg';
     import save from '$lib/icons/save.svg';
@@ -31,8 +32,6 @@
 
 <div class="collection-list">
     <div class="notes-list">
-        <h3>{data.collection.title}</h3>
-
         {#if !data.collection.expand?.notes.length}
             <p class="helper-text">No notes yet</p>
         {/if}
@@ -41,6 +40,7 @@
             {#if data.collection.expand?.notes}
                 {#each data.collection.expand?.notes as note (note)}
                     <li class="note-details" class:isSelected={note.id === urlParams.noteID}>
+                        <img src="{file}" alt="file" />
                         {#if note.id !== noteIDToEdit}
                             <div class="note-interior">
                                 <a href="/{data.collection.id}/{note.id}">
@@ -177,8 +177,9 @@
 
     .note-details {
         display: grid;
-        grid-template-columns: auto 1rem;
+        grid-template-columns: 1rem auto 1rem;
         align-items: center;
+        padding-left: .5rem;
     }
 
     .note-details:hover {
@@ -216,13 +217,13 @@
         margin-top: .5rem;
     }
 
-    label img {
+    img {
         cursor: pointer;
         height: 1rem;
         opacity: .7;
     }
 
-    label img:hover {
+    img:hover {
         opacity: 1;
     }
 

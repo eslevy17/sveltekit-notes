@@ -8,7 +8,6 @@
 </script>
 
 <div class="note-details">
-    <h3>{data.note.title}</h3>
     <form method="POST" action="?/update-content" use:enhance>
         <textarea name="content" bind:value={data.note.content}></textarea>
         <label>
@@ -25,7 +24,7 @@
 
 <style>
     .note-details {
-        padding: 0 1.25rem;
+        padding: 1.25rem 0 0 1.25rem;
     }
 
     label img {
