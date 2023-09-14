@@ -1,6 +1,5 @@
 <script>
     import { enhance } from '$app/forms';
-    import add from '$lib/icons/add.svg';
     import edit from '$lib/icons/edit.svg';
     import folder from '$lib/icons/folder.svg';
     import house from '$lib/icons/house.svg';
@@ -10,6 +9,7 @@
     import Toggle from "$lib/components/Toggle.svelte";
     import {afterUpdate} from "svelte";
     import { page } from '$app/stores';
+    import AddNewItemForm from "$lib/components/AddNewItemForm.svelte";
 
     export let data;
 
@@ -130,45 +130,12 @@
                 </li>
             {/each}
 
-            <li class="helper-text-li">
-                <p class="helper-text">Add new:</p>
-                <form
-                    class="add-new-form"
-                    method="POST"
-                    action="/collectionID?/create"
-                    use:enhance
-                    on:submit={() => isAdding = false}
-                    on:reset={() => isAdding = false}
-                >
-                    <input
-                        type="text"
-                        name="title"
-                        on:keydown={e => {
-                            if (e.key === 'Escape') {
-                                e.target.value = ''
-                                e.target.blur()
-                                isAdding = false
-                            }
-                        }}
-                        on:focus={() => {
-                            collectionIDToEdit = undefined
-                            isAdding = true
-                        }}
-                    />
-
-                    {#if isAdding}
-                        <label>
-                            <img src="{add}" alt="add" />
-                            <input type="submit" value="Submit" />
-                        </label>
-
-                        <label>
-                            <img src="{revert}" alt="revert" />
-                            <input type="reset" name="reset" />
-                        </label>
-                    {/if}
-                </form>
-            </li>
+            <AddNewItemForm
+                formActionURL="/collectionID?/create"
+                {isAdding}
+                setIsAdding={newVal => isAdding = newVal}
+                setItemIDToEdit={newVal => collectionIDToEdit = newVal}
+            />
         </ul>
     </div>
 
@@ -258,17 +225,6 @@
         grid-gap: 1rem;
         align-items: center;
         margin-right: 1rem;
-    }
-
-    .add-new-form {
-        display: grid;
-        grid-template-columns: auto 1rem 1rem 1rem;
-        align-items: center;
-        grid-gap: 1rem;
-    }
-
-    .helper-text-li {
-        padding-left: .5rem;
     }
 
     .helper-text {
