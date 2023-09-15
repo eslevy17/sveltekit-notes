@@ -37,26 +37,24 @@
             }}
         />
 
-        {#if isAdding}
-            <label>
-                <img src="{add}" alt="add" />
-                <input type="submit" value="Submit" />
-            </label>
+        <label class:isAdding>
+            <img src="{add}" alt="add" />
+            <input type="submit" value="Submit" />
+        </label>
 
-            <label>
-                <img src="{revert}" alt="revert" />
-                <input type="reset" name="reset" />
-            </label>
-        {/if}
+        <label class:isAdding>
+            <img src="{revert}" alt="revert" />
+            <input type="reset" name="reset" />
+        </label>
     </form>
 </li>
 
 <style>
     .add-new-form {
         display: grid;
-        grid-template-columns: auto 1rem 1rem 1rem;
+        grid-template-columns: auto 1rem 1rem;
         align-items: center;
-        grid-gap: 1rem;
+        grid-gap: .5rem;
     }
 
     .helper-text-li {
@@ -88,5 +86,11 @@
 
     label input {
         display: none;
+    }
+
+    label:not(.isAdding) {
+        opacity: .5;
+        cursor: default;
+        pointer-events: none;
     }
 </style>

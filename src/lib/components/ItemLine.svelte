@@ -44,7 +44,7 @@
     })
 </script>
 
-<li class="item-details" class:isSelected>
+<li class="item-details" class:isSelected class:isEditing>
     <img src="{iconType}" alt={iconName} class="item-label-img" />
     {#if !isEditing}
         <div class="item-interior">
@@ -91,12 +91,8 @@
                 <img src="{save}" alt="save" />
                 <input type="submit" value="Submit" />
             </label>
-
-            <label>
-                <img src="{revert}" alt="revert" />
-                <button on:click={() => setItemIDToEdit(undefined)}>Revert</button>
-            </label>
         </form>
+
         <form
             method="POST"
             action={deleteFormActionURL}
@@ -117,15 +113,21 @@
                 <input type="Submit" value="Delete" />
             </label>
         </form>
+
+        <label>
+            <img src="{revert}" alt="revert" />
+            <button on:click={() => setItemIDToEdit(undefined)}>Revert</button>
+        </label>
     {/if}
 </li>
 
 <style>
     .item-details {
         display: grid;
-        grid-template-columns: 1rem auto 1rem;
+        grid-template-columns: 1rem auto;
         align-items: center;
         padding-left: .5rem;
+        gap: .5rem;
     }
 
     .item-details:hover {
@@ -136,25 +138,28 @@
         background-color: var(--bg-hover-color);
     }
 
+    .item-details.isEditing {
+        grid-template-columns: 1rem auto 1rem 1rem;
+    }
+
     .item-interior {
         width: 100%;
         display: grid;
-        grid-template-columns: auto 1rem 1rem;
+        grid-template-columns: auto 1rem;
         align-items: center;
     }
 
     .item-edit-form {
         display: grid;
-        grid-template-columns: auto 1rem 1rem;
-        grid-gap: 1rem;
+        grid-template-columns: auto 1rem;
+        grid-gap: .5rem;
         align-items: center;
-        margin-right: 1rem;
     }
 
     input {
         /* so the view/edit toggle doesn't move the content */
-        margin: -1px 0 -1px 3px;
-        padding-left: 4px;
+        margin: -1px 0 -1px 0;
+        padding-left: 7px;
         width: 100%;
         box-sizing: border-box;
     }
