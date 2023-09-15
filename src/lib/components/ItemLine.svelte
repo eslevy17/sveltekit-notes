@@ -151,6 +151,14 @@
         margin-right: 1rem;
     }
 
+    input {
+        /* so the view/edit toggle doesn't move the content */
+        margin: -1px 0 -1px 3px;
+        padding-left: 4px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
     img {
         cursor: pointer;
         height: 1rem;

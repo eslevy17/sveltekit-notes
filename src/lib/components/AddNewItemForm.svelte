@@ -70,6 +70,12 @@
         margin-top: 1rem;
     }
 
+    input {
+        padding-left: 7px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
     img {
         cursor: pointer;
         height: 1rem;
