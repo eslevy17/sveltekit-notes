@@ -3,17 +3,21 @@
     import { page } from "$app/stores";
     import AddNewItemForm from "$lib/components/AddNewItemForm.svelte";
     import ItemLine from "$lib/components/ItemLine.svelte";
+    import ItemSearch from "$lib/components/ItemSearch.svelte";
 
     export let data;
 
     afterUpdate(() => {
-        if (noteIDToEdit) {
+        if (noteIDToEdit
+            && document.querySelector('input[name="note-search-field"]') !== document.activeElement
+        ) {
             document.querySelector('form[name="note-edit-form"] input[type="text"]').focus()
         }
     })
 
     let noteIDToEdit;
     let isAdding = false;
+    let searchTerms;
 
     let urlParams;
 
@@ -29,11 +33,21 @@
     <div class="notes-list">
         {#if !data.collection.expand?.notes.length}
             <p class="helper-text">No notes yet</p>
+        {:else}
+            <ItemSearch
+                itemType="note"
+                {searchTerms}
+                setSearchTerms={e => {
+                    // e can be undefined if the form is reset()
+                    searchTerms = e?.target?.value
+                }}
+                setIsAdding={newVal => isAdding = newVal}
+            />
         {/if}
 
         <ul>
             {#if data.collection.expand?.notes}
-                {#each data.collection.expand?.notes as note (note)}
+                {#each data.collection.expand?.notes.filter(note => !searchTerms || note.title.toLowerCase().includes(searchTerms?.toLowerCase())) as note (note)}
                     <ItemLine
                         itemType="note"
                         itemID={note.id}

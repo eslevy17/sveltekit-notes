@@ -5,6 +5,7 @@
     import { page } from '$app/stores';
     import AddNewItemForm from "$lib/components/AddNewItemForm.svelte";
     import ItemLine from "$lib/components/ItemLine.svelte";
+    import ItemSearch from "$lib/components/ItemSearch.svelte";
 
     export let data;
 
@@ -17,13 +18,16 @@
     }
 
     afterUpdate(() => {
-        if (collectionIDToEdit) {
+        if (collectionIDToEdit
+            && document.querySelector('input[name="collection-search-field"]') !== document.activeElement
+        ) {
             document.querySelector('form[name="collection-edit-form"] input[type="text"]').focus()
         }
     })
 
     let collectionIDToEdit;
     let isAdding = false;
+    let searchTerms;
 
     let urlParams;
 
@@ -46,10 +50,20 @@
     <div class="all-collections-list">
         {#if !data.collections.length}
             <p class="helper-text">No collections yet</p>
+        {:else}
+            <ItemSearch
+                itemType="collection"
+                {searchTerms}
+                setSearchTerms={e => {
+                    // e can be undefined if the form is reset()
+                    searchTerms = e?.target?.value
+                }}
+                setIsAdding={newVal => isAdding = newVal}
+            />
         {/if}
 
         <ul>
-            {#each data.collections as collection (collection)}
+            {#each data.collections.filter(collection => !searchTerms || collection.title.toLowerCase().includes(searchTerms?.toLowerCase())) as collection (collection)}
                 <ItemLine
                     itemType="collection"
                     itemID={collection.id}
