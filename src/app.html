@@ -21,9 +21,12 @@
 	body {
 		--bg-color: #fbfbfb;
 		--font-color: #161616;
-		--border-color: darkgray;
+		--border-color: #6a6a6a;
+		--border-hover-color: #494949;
 		--bg-hover-color: #e8e8e8;
 		--border-radius: 4px;
+
+		--animation-speed: .25s;
 
 		--link: var(--font-color);
 		--link-hover: var(--font-color);
@@ -32,20 +35,28 @@
 		font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 
 		margin: 0;
-		background-color: var(--bg-color);
 	}
 
-	p, h1, h2, h3, h4, h5, h6, textarea {
+	p, h1, h2, h3, h4, h5, h6, input, textarea {
 		color: var(--font-color);
+		transition: color var(--animation-speed);
+	}
+
+	p, a, input, textarea {
+		font-weight: lighter;
 	}
 
 	input, textarea {
-		color: var(--font-color);
 		background-color: var(--bg-color);
 		border: 1px solid var(--border-color);
 		font-size: 1rem;
 		border-radius: var(--border-radius);
+		outline: none;
 		padding: 4px;
+		transition:
+			color var(--animation-speed),
+			border var(--animation-speed),
+			background-color var(--animation-speed);
 	}
 
 	textarea {
@@ -54,7 +65,11 @@
 	}
 
 	input:hover, textarea:hover {
-		border: 1px solid var(--font-color);
+		border: 1px solid var(--border-hover-color);
+	}
+
+	input:focus, textarea:focus {
+		outline: 1px solid var(--border-hover-color);
 	}
 
 	ul {
@@ -72,7 +87,7 @@
 		padding: 4px .5rem;
 		text-decoration: none;
 		color: var(--link);
-		filter: brightness(.8)
+		transition: color var(--animation-speed);
 	}
 
 	a:hover {
@@ -87,28 +102,24 @@
 		height: 1rem;
 	}
 
+	img {
+		transition:
+			opacity var(--animation-speed),
+			filter var(--animation-speed);
+	}
+
 	/* BEGIN DARK MODE */
 
 	.dark {
 		--bg-color: #2e2e2e;
 		--font-color: #e6e6e6;
 		--border-color: #595959;
+		--border-hover-color: #7c7c7c;
 		--bg-hover-color: #444444;
-	}
-
-	.dark a {
-		filter: brightness(1);
 	}
 
 	.dark img {
 		filter: invert(1);
-	}
-
-	.dark p,
-	.dark a,
-	.dark input,
-	.dark textarea {
-		font-weight: lighter;
 	}
 
 	/* END DARK MODE */

@@ -37,13 +37,13 @@
             }}
         />
 
-        <label class:isAdding>
-            <img src="{add}" alt="add" />
+        <label>
+            <img src="{add}" alt="add" class:isAdding />
             <input type="submit" value="Submit" />
         </label>
 
-        <label class:isAdding>
-            <img src="{revert}" alt="revert" />
+        <label>
+            <img src="{revert}" alt="revert" class:isAdding />
             <input type="reset" name="reset" />
         </label>
     </form>
@@ -88,7 +88,7 @@
         display: none;
     }
 
-    label:not(.isAdding) {
+    img:not(.isAdding) {
         opacity: .5;
         cursor: default;
         pointer-events: none;

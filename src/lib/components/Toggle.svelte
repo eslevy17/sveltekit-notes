@@ -37,6 +37,7 @@
         margin: .5rem;
         cursor: pointer;
         opacity: .5;
+        transition: opacity var(--animation-speed);
     }
 
     .switch-container:hover {

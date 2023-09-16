@@ -7,6 +7,7 @@
     import trash from "$lib/icons/trash.svg";
     import { enhance } from '$app/forms';
     import { onMount } from "svelte";
+    import { slide } from 'svelte/transition';
     import { page } from "$app/stores";
     import { goto } from "$app/navigation";
 
@@ -46,7 +47,12 @@
     })
 </script>
 
-<li class="item-details" class:isSelected class:isEditing>
+<li
+    class="item-details"
+    class:isSelected
+    class:isEditing
+    transition:slide
+>
     <img src="{iconType}" alt={iconName} class="item-label-img" />
     {#if !isEditing}
         <div class="item-interior">
@@ -143,6 +149,7 @@
         align-items: center;
         padding-left: .5rem;
         gap: .5rem;
+        transition: background-color var(--animation-speed);
     }
 
     .item-details:hover {

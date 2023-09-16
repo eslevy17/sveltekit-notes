@@ -1,6 +1,7 @@
 <script>
     import search from '$lib/icons/search.svg';
     import clear from '$lib/icons/clear.svg';
+    import { fade } from 'svelte/transition';
 
     export let itemType;
     export let searchTerms;
@@ -30,7 +31,7 @@
     />
 
     {#if searchTerms}
-        <label>
+        <label transition:fade>
             <img src={clear} alt="clear" class="clear-icon" />
             <input type="reset" name="reset" />
         </label>

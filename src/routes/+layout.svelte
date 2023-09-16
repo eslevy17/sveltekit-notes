@@ -63,7 +63,7 @@
         {/if}
 
         <ul>
-            {#each data.collections.filter(collection => !searchTerms || collection.title.toLowerCase().includes(searchTerms?.toLowerCase())) as collection (collection)}
+            {#each data.collections.filter(collection => !searchTerms || collection.title.toLowerCase().includes(searchTerms?.toLowerCase())) as collection (collection.id)}
                 <ItemLine
                     itemType="collection"
                     itemID={collection.id}
@@ -97,6 +97,7 @@
     .grid-layout {
         height: 100vh;
         background-color: var(--bg-color);
+        transition: background-color var(--animation-speed);
         display: grid;
         grid-template-rows: auto 1fr;
         grid-template-columns: 1fr 3fr;
@@ -111,6 +112,7 @@
         gap: .5rem;
         opacity: .7;
         padding: 0;
+        transition: opacity var(--animation-speed);
     }
 
     .site-title:hover {
@@ -133,12 +135,14 @@
         padding: .5rem 1rem;
         border-bottom: 1px solid var(--border-color);
         grid-area: header;
+        transition: border var(--animation-speed);
     }
 
     .all-collections-list {
         grid-area: note-collection;
         padding: 0 1.25rem;
         border-right: 1px solid var(--border-color);
+        transition: border var(--animation-speed);
         height: 100%;
     }
 

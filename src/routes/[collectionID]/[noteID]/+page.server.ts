@@ -8,7 +8,7 @@ export async function load({ params }) {
         .getOne(
             params.noteID,
             {
-                fields: 'title,content'
+                fields: 'id,title,content'
             }
         )
 
