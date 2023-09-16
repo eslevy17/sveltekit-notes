@@ -7,6 +7,8 @@
     import trash from "$lib/icons/trash.svg";
     import { enhance } from '$app/forms';
     import { onMount } from "svelte";
+    import { page } from "$app/stores";
+    import { goto } from "$app/navigation";
 
     export let itemType; // 'collection' | 'note'
     export let itemID;
@@ -105,6 +107,19 @@
                 return async ({ update }) => {
                     await update()
                     setItemIDToEdit(undefined)
+
+                    const urlParams = {
+                        collectionID: $page.url.pathname.split('/')[1],
+                        noteID: $page.url.pathname.split('/')[2]
+                    }
+
+                    if (itemType === 'collection' && urlParams.collectionID === itemID) {
+                       goto('/')
+                    }
+                    else if (itemType === 'note' && urlParams.noteID === itemID) {
+                       goto(`/${parentCollectionID}`)
+                    }
+
                 }
             }}
         >

@@ -1,5 +1,4 @@
 import PocketBase from 'pocketbase';
-import { redirect } from "@sveltejs/kit";
 
 export const actions = {
     create: async ({ request }) => {
@@ -47,7 +46,5 @@ export const actions = {
         await pb
             .collection('collection')
             .delete(params.collectionID);
-
-        throw redirect(303, '/')
     }
 }
