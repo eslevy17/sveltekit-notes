@@ -1,6 +1,5 @@
 <script>
     import {afterUpdate} from "svelte";
-    import { page } from "$app/stores";
     import AddNewItemForm from "$lib/components/AddNewItemForm.svelte";
     import ItemLine from "$lib/components/ItemLine.svelte";
     import ItemSearch from "$lib/components/ItemSearch.svelte";
@@ -22,11 +21,9 @@
 
     let urlParams;
 
-    $: {
-        urlParams = {
-            collectionID: $page.url.pathname.split('/')[1],
-            noteID: $page.url.pathname.split('/')[2]
-        }
+    $: urlParams = {
+        collectionID: data.pathname.split('/')[1],
+        noteID: data.pathname.split('/')[2]
     }
 </script>
 

@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase';
 
-export async function load() {
+export async function load({ url }) {
     const pb = new PocketBase('http://127.0.0.1:8090');
 
     const collections = await pb
@@ -9,7 +9,10 @@ export async function load() {
             fields: 'id,title'
         })
 
+    const { pathname } = url
+
     return {
-        collections
+        collections,
+        pathname
     };
 }
