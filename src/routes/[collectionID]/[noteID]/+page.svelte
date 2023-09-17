@@ -3,27 +3,24 @@
     import revert from '$lib/icons/revert.svg';
     import save from '$lib/icons/save.svg';
     import {invalidateAll} from "$app/navigation";
-    import { fade } from 'svelte/transition';
 
     export let data;
 </script>
 
-{#each [data.note.id] as noteID (noteID)}
-    <div class="note-details" in:fade={{duration: 500}}>
-        <form method="POST" action="?/update-content" use:enhance>
-            <textarea name="content" bind:value={data.note.content}></textarea>
-            <label>
-                <img src="{save}" alt="save" />
-                <input type="submit" value="Submit" />
-            </label>
+<div class="note-details">
+    <form method="POST" action="?/update-content" use:enhance>
+        <textarea name="content" bind:value={data.note.content}></textarea>
+        <label>
+            <img src="{save}" alt="save" />
+            <input type="submit" value="Submit" />
+        </label>
 
-            <label>
-                <img src="{revert}" alt="revert" />
-                <button on:click|preventDefault={() => invalidateAll()}>Revert</button>
-            </label>
-        </form>
-    </div>
-{/each}
+        <label>
+            <img src="{revert}" alt="revert" />
+            <button on:click|preventDefault={() => invalidateAll()}>Revert</button>
+        </label>
+    </form>
+</div>
 
 <style>
     .note-details {
@@ -31,7 +28,6 @@
         height: 100%;
         box-sizing: border-box;
         padding: 1.25rem 0 0 1.25rem;
-        background-color: var(--bg-color-xx-dark);
     }
 
     label {

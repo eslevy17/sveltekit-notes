@@ -5,6 +5,7 @@
     import AddNewItemForm from "$lib/components/AddNewItemForm.svelte";
     import ItemLine from "$lib/components/ItemLine.svelte";
     import ItemSearch from "$lib/components/ItemSearch.svelte";
+    import { fade } from 'svelte/transition';
 
     export let data;
 
@@ -85,22 +86,28 @@
         </ul>
     </div>
 
-    <div class="note-details-slot">
-        <slot />
+    <div class="collection-details-slot">
+        {#key urlParams.collectionID}
+            <span
+                in:fade={{duration: 200, delay: 100}}
+                out:fade={{duration: 100}}
+            >
+                <slot />
+            </span>
+        {/key}
     </div>
 </div>
 
 <style>
     .grid-layout {
         height: 100vh;
-        background-color: var(--bg-color);
         transition: background-color var(--animation-speed);
         display: grid;
         grid-template-rows: auto 1fr;
         grid-template-columns: 1fr 3fr;
         grid-template-areas:
             "header header"
-            "note-collection note-details";
+            "all-collections collection-details";
     }
 
     .site-title {
@@ -127,17 +134,21 @@
     }
 
     nav {
+        background-color: var(--bg-color);
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: .5rem 1rem;
         border-bottom: 1px solid var(--border-color);
         grid-area: header;
-        transition: border var(--animation-speed);
+        transition:
+            border var(--animation-speed),
+            background-color var(--animation-speed)
+        ;
     }
 
     .all-collections-list {
-        grid-area: note-collection;
+        grid-area: all-collections;
         background-color: var(--bg-color-dark);
         padding: 0 1.25rem;
         border-right: 1px solid var(--border-color);
@@ -148,8 +159,10 @@
         ;
     }
 
-    .note-details-slot {
-        grid-area: note-details;
+    .collection-details-slot {
+        grid-area: collection-details;
+        background-color: var(--bg-color-xx-dark);
+        transition: background-color var(--animation-speed);
     }
 
     .helper-text {
