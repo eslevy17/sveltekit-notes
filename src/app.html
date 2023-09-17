@@ -20,10 +20,14 @@
 <style>
 	body {
 		--bg-color: #fbfbfb;
-		--font-color: #161616;
-		--border-color: #6a6a6a;
-		--border-hover-color: #494949;
-		--bg-hover-color: #e8e8e8;
+		--bg-color-dark: #f8f9fa;
+		--bg-color-x-dark: #f3f3f5;
+		--bg-color-xx-dark: #ecedee;;
+		--font-color: #484848;;
+		--border-color: #b7b7b7;
+		--border-hover-color: #656565;
+		--bg-hover-color: #cbcbcb;
+		--bg-active-color: #aad8ff;
 		--border-radius: 4px;
 
 		--animation-speed: .25s;
@@ -67,7 +71,7 @@
 	}
 
 	input:focus, textarea:focus {
-		outline: 1px solid var(--border-hover-color);
+		outline: 1px solid var(--bg-active-color);
 	}
 
 	ul {
@@ -103,7 +107,10 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		transition: opacity var(--animation-speed);
+		transition:
+			opacity var(--animation-speed),
+			background-color var(--animation-speed)
+		;
 	}
 
 	img {
@@ -111,17 +118,23 @@
 		width: 1rem;
 		transition:
 			opacity var(--animation-speed),
-			filter var(--animation-speed);
+			filter var(--animation-speed),
+			background-color var(--animation-speed)
+		;
 	}
 
 	/* BEGIN DARK MODE */
 
 	.dark {
-		--bg-color: #2e2e2e;
-		--font-color: #e6e6e6;
+		--bg-color: #2a2a2a;
+		--bg-color-dark: #242424;
+		--bg-color-x-dark: #1e1e1e;
+		--bg-color-xx-dark: #1a1a1a;
+		--font-color: #bcbcbc;
 		--border-color: #595959;
 		--border-hover-color: #7c7c7c;
 		--bg-hover-color: #444444;
+		--bg-active-color: #2b4cb0;
 	}
 
 	.dark img {

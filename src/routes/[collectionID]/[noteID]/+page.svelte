@@ -27,9 +27,11 @@
 
 <style>
     .note-details {
+        transition: background-color var(--animation-speed);
         height: 100%;
         box-sizing: border-box;
         padding: 1.25rem 0 0 1.25rem;
+        background-color: var(--bg-color-xx-dark);
     }
 
     label {
@@ -39,6 +41,7 @@
 
     label:hover {
         opacity: 1;
+        background-color: var(--bg-hover-color);
     }
 
     label button,

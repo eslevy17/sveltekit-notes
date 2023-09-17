@@ -83,6 +83,10 @@
         display: none;
     }
 
+    label:hover {
+        background-color: var(--bg-hover-color);
+    }
+
     label:not(.isAdding) {
         opacity: .2;
         cursor: default;

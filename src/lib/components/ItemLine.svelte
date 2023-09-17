@@ -157,7 +157,7 @@
     }
 
     .item-details.isSelected {
-        background-color: var(--bg-hover-color);
+        background-color: var(--bg-active-color);
     }
 
     .item-details.isEditing {

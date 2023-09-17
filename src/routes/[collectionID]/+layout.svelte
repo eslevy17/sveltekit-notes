@@ -83,9 +83,11 @@
 
 <style>
     .collection-list {
+        transition: background-color var(--animation-speed);
         display: grid;
         grid-template-columns: 1fr 2fr;
         height: 100%;
+        background-color: var(--bg-color-x-dark);
     }
 
     .notes-list {

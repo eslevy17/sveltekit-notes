@@ -141,10 +141,14 @@
 
     .all-collections-list {
         grid-area: note-collection;
+        background-color: var(--bg-color-dark);
         padding: 0 1.25rem;
         border-right: 1px solid var(--border-color);
-        transition: border var(--animation-speed);
         height: 100%;
+        transition:
+            border var(--animation-speed),
+            background-color var(--animation-speed)
+        ;
     }
 
     .note-details-slot {
