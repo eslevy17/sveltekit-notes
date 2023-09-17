@@ -122,6 +122,7 @@
     .site-title img {
         opacity: 1; /* to override the regular img {} selector */
         height: 1.5rem;
+        width: 1.5rem;
     }
 
     .site-title h3 {

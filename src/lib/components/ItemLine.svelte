@@ -147,7 +147,7 @@
         display: grid;
         grid-template-columns: 1rem auto;
         align-items: center;
-        padding-left: .5rem;
+        padding: 2px .5rem;
         gap: .5rem;
         transition: background-color var(--animation-speed);
     }
@@ -180,20 +180,23 @@
 
     input {
         /* so the view/edit toggle doesn't move the content */
-        margin: -1px 0 -1px 0;
-        padding-left: 7px;
+        margin: 2px 0;
+        padding: 1px 7px;
         width: 100%;
         box-sizing: border-box;
     }
 
-    img {
+    label {
         cursor: pointer;
-        height: 1rem;
         opacity: .7;
     }
 
-    img:hover:not(.item-label-img) {
+    label:hover {
         opacity: 1;
+    }
+
+    .item-label-img {
+        opacity: .7;
     }
 
     label button,

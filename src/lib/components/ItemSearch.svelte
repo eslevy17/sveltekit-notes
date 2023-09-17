@@ -31,8 +31,8 @@
     />
 
     {#if searchTerms}
-        <label transition:fade>
-            <img src={clear} alt="clear" class="clear-icon" />
+        <label class="clear-icon" transition:fade>
+            <img src={clear} alt="clear" />
             <input type="reset" name="reset" />
         </label>
     {/if}
@@ -41,35 +41,39 @@
 <style>
     .search-line-form {
         margin-top: 1.25rem;
-        display: flex;
+        display: grid;
+        grid-template-columns: 1.5rem auto 0;
         align-items: center;
         width: calc(100% + .5rem)
     }
 
     input {
         margin: -1px 0;
-        padding-left: 7px;
+        padding: 4px 7px;
         width: 100%;
         box-sizing: border-box;
         border-radius: 1rem;
     }
 
     img {
-        height: 1rem;
         opacity: .7;
     }
 
-    img.clear-icon:hover {
-        cursor: pointer;
-        opacity: 1;
-    }
+
 
     .search-icon {
         margin-right: .5rem;
     }
 
     .clear-icon {
+        opacity: .7;
         margin-left: -1.5rem;
+        transition: opacity var(--animation-speed);
+    }
+
+    .clear-icon:hover {
+        cursor: pointer;
+        opacity: 1;
     }
 
     label input {

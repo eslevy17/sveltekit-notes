@@ -27,16 +27,17 @@
 
 <style>
     .note-details {
+        height: 100%;
+        box-sizing: border-box;
         padding: 1.25rem 0 0 1.25rem;
     }
 
-    label img {
+    label {
         cursor: pointer;
-        height: 1rem;
         opacity: .7;
     }
 
-    label img:hover {
+    label:hover {
         opacity: 1;
     }
 
@@ -52,6 +53,7 @@
     }
 
     textarea {
+        padding: .5rem;
         resize: vertical;
     }
 </style>

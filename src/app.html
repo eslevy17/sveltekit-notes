@@ -43,16 +43,14 @@
 	}
 
 	p, a, input, textarea {
-		font-weight: lighter;
+		font-size: 14px;
 	}
 
 	input, textarea {
 		background-color: var(--bg-color);
 		border: 1px solid var(--border-color);
-		font-size: 1rem;
 		border-radius: var(--border-radius);
 		outline: none;
-		padding: 4px;
 		transition:
 			color var(--animation-speed),
 			border var(--animation-speed),
@@ -99,10 +97,18 @@
 	}
 
 	label {
-		height: 1rem;
+		height: 1.5rem;
+		width: 1.5rem;
+		border-radius: 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: opacity var(--animation-speed);
 	}
 
 	img {
+		height: 1rem;
+		width: 1rem;
 		transition:
 			opacity var(--animation-speed),
 			filter var(--animation-speed);
